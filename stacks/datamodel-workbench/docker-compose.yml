@@ -1,0 +1,58 @@
+version: '3.3'
+services:
+    datalaketool-app:        
+        image: docker-activage.satrd.es/dl-datamodel-workbench:latest
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATA_MONGODB_URI=mongodb://workbench-mongodb:27017
+            - SPRING_DATA_MONGODB_DATABASE=activage-data-lake
+            - SIMLIFE_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=workbench-elasticsearch:9300
+            - BASE_URL=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}
+            - API_MDS=${BASE_URL}${PATH_MDS}
+            - API_IDS=${BASE_URL}${PATH_IDS}
+            - API_QE=${BASE_URL}${PATH_QE}
+            - KEYCLOAK_REALM=${KEYCLOAK_REALM}
+            - KEYCLOAK_AUTH-SERVER-URL=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/auth/
+            - KEYCLOAK_SSL-REQUIRED=external
+            - KEYCLOAK_RESOURCE=${KEYCLOAK_RESOURCE}
+            - KEYCLOAK_PUBLIC-CLIENT=true
+            - KEYCLOAK_CONFIDENTIAL-PORT=0
+        expose:
+            - "8080"
+        restart: unless-stopped
+    
+    workbench-elasticsearch:
+        image: elasticsearch:2.4.6
+        container_name: wb_elasticsearch
+        environment:
+            - node.name=wb_elasticsearch
+            - cluster.name=docker-cluster
+            - cluster.initial_master_nodes=wb_elasticsearch
+            - bootstrap.memory_lock=true
+            - "ES_JAVA_OPTS=-Xms256M -Xmx256M"
+            - http.cors.enabled=true
+            - http.cors.allow-origin=*
+            - network.host=_eth0_
+        volumes:
+            - elasticsearch-data:/usr/share/elasticsearch/data/
+        restart: unless-stopped
+    
+    workbench-mongodb:
+        image: mongo
+        container_name: wb_mongo
+        environment:
+            - "ES_JAVA_OPTS=-Xms256M -Xmx256M"
+            - http.cors.enabled=true
+            - http.cors.allow-origin=*
+            - network.host=_eth0_
+        restart: unless-stopped
+
+volumes:
+  elasticsearch-data:
+  
+
+networks:
+  default:
+    external:
+      name: aiotes

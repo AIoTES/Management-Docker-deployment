@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+  
+  ontexplorer:
+    image: docker-activage.satrd.es/ont-explorer_dev-semantic_serv-semantics:1.0.2
+    expose:
+      - "9082"
+    environment:
+      - "AIOTES_HOSTNAME=${AIOTES_HOSTNAME}"
+      - "AIOTES_API_PORT=${AIOTES_API_PORT}"
+      - "KEYCLOAK_CLIENT_NAME=${KEYCLOAK_CLIENT_NAME}"
+      - "KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}"
+      - "KEYCLOAK_REDIRECT_URI=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/web/activage/semantics/redirect"
+    restart: unless-stopped
+    command:
+        - "/usr/bin/ontology_explorer/start.sh"
+
+networks:
+  default:
+    external:
+      name: aiotes
+

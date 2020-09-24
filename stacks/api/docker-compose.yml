@@ -1,0 +1,75 @@
+version: '3.3'
+
+services:
+
+  express-gw:
+    image: docker-activage.satrd.es/express-gateway-with-keycloak-plugin:v1.16.7-debug
+    ports:
+      - "${AIOTES_API_PORT}:${AIOTES_API_PORT}"
+    environment:
+      - LOG_LEVEL=debug
+      - BRIDGES_CALLBACK_PORT=${AIOTES_API_PORT}
+      - AUTH_SERVER_URL=${AUTH_SERVER_URL}
+      - AUTH_SERVER_REALM=${AUTH_SERVER_REALM}
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
+      - AIOTES_HOSTNAME=${AIOTES_HOSTNAME}
+      - EXTERNAL_ENDPOINT=https://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/auth
+    configs:
+      - source: gateway-conf
+        target: /var/lib/eg/gateway.config.yml
+      - source: system-conf
+        target: /var/lib/eg/system.config.yml
+    volumes:
+        - certs:/var/lib/certs/:ro
+    restart: unless-stopped
+    networks:
+      aiotes:
+        aliases:
+            - ${AIOTES_HOSTNAME}
+
+  swagger-ui:
+    image: docker-activage.satrd.es/aiotes-swagger:2.0
+    restart: unless-stopped
+    networks:
+      - aiotes
+
+  redis:
+    image: redis:alpine
+    expose:
+      - 6379
+    volumes:
+      - "redis_data:/data"
+#    command: --appendonly yes
+    restart: unless-stopped
+    networks:
+      - aiotes
+
+  certbot:
+    image: docker-activage.satrd.es/certbot:latest
+    expose:
+      - 80
+    ports:
+      - "80:80"    
+    environment:
+      - AIOTES_HOSTNAME=${AIOTES_HOSTNAME}
+      - AIOTES_SYSADMIN_EMAIL=${AIOTES_SYSADMIN_EMAIL}
+    volumes:
+        - certs:/etc/letsencrypt
+    restart: unless-stopped
+    networks:
+      - aiotes
+
+configs:
+  gateway-conf:
+    file: ./api/gateway.config.yml
+  system-conf:
+    file: ./api/system.config.yml
+
+volumes:
+  redis_data:
+  certs:
+
+networks:
+  aiotes:
+    external: true

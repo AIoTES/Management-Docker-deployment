@@ -1,0 +1,46 @@
+version: '3.3'
+
+services:
+  keycloak:
+    image: jboss/keycloak:6.0.0
+    environment:
+      - KEYCLOAK_USER=${KEYCLOAK_USER}
+      - KEYCLOAK_PASSWORD=${KEYCLOAK_PASSWORD}
+      - DB_VENDOR=postgres
+      - DB_ADDR=keycloak-postgres-database
+      - DB_PORT=5432
+      - DB_DATABASE=keycloak-activage
+      - DB_USER=keycloak-activage
+      - DB_PASSWORD=keycloak-activage
+      - ROOT_LOGLEVEL=DEBUG
+      - PROXY_ADDRESS_FORWARDING=true
+      #       Import parameters
+      - KEYCLOAK_IMPORT=/tmp/realm-export.json
+    configs:
+      - source: realm-conf
+        target: /tmp/realm-export.json
+    # ports:
+      # - "${PORT}:8080"
+    restart: unless-stopped
+
+  keycloak-postgres-database:
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_USER=keycloak-activage
+      - POSTGRES_PASSWORD=keycloak-activage
+      - POSTGRES_DB=keycloak-activage
+    volumes:
+      - keycloak-activage-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  keycloak-activage-data:
+
+configs:
+  realm-conf:
+    file: ./keycloak-export/activage-realm.json
+
+networks:
+  default:
+    external:
+      name: aiotes

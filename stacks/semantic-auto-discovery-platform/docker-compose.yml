@@ -1,0 +1,24 @@
+version: '3.3'
+services:
+    auto-discovery-platform:        
+        image: docker-activage.satrd.es/semantic-auto-discovery:1.0.2
+        environment:
+            - "AIOTES_API=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}${API_PATH}"
+            - "CLIENT_ID=${CLIENT_ID}"
+            - "AIOTES_HOSTNAME=${AIOTES_HOSTNAME}"
+            - "AIOTES_API_PORT=${AIOTES_API_PORT}"
+            - "KEYCLOAK_CLIENT_NAME=${KEYCLOAK_CLIENT_NAME}"
+            - "KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}"
+            - "KEYCLOAK_REDIRECT_URI=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/web/activage/discovery-platform/redirect"
+        ports:
+            - "${UI_PORT}:9082"
+        expose:
+            - "9082"
+        restart: unless-stopped
+        command:
+            - "/usr/bin/semantic_auto_discovery/start.sh"
+
+networks:
+  default:
+    external:
+      name: aiotes

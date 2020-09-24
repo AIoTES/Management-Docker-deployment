@@ -1,0 +1,11 @@
+version: '3.3'
+services:
+  
+  siltool:
+    image: docker-activage.satrd.es/siltool:0.0.5
+    restart: unless-stopped
+
+networks:
+  default:
+    external:
+      name: aiotes

@@ -1,0 +1,25 @@
+version: '3.0'
+services:
+    device-manager:
+        image: docker-activage.satrd.es/device_manager:1.0.2
+        restart: unless-stopped
+        expose:
+            - "9082"
+        environment:
+            - METADATA_STORAGE=${METADATA_STORAGE}
+            - "AIOTES_HOSTNAME=${AIOTES_HOSTNAME}"
+            - "AIOTES_API_PORT=${AIOTES_API_PORT}"
+            - "KEYCLOAK_CLIENT_NAME=${KEYCLOAK_CLIENT_NAME}"
+            - "KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}"
+            - "KEYCLOAK_REDIRECT_URI=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/web/activage/device-manager/redirect"
+        links:
+            - metadata_storage_server
+        depends_on:
+            - metadata_storage_server
+        command:
+            - "/usr/bin/device_manager/start.sh"
+
+networks:
+  default:
+    external:
+      name: aiotes

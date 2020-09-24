@@ -1,0 +1,590 @@
+[
+  {
+    "type": 2,
+    "name": "express-gateway",
+	"title": "AIoTES API",
+    "description": "AIoTES API",
+	"logo": "https://i.imgur.com/G0rE67b.png",
+    "categories": ["core"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/api/docker-compose.yml"
+    },
+    "env": [
+	  {
+        "name": "AUTH_SERVER_URL",
+        "label": "Keycloak base URL",
+        "default": "http://keycloak:8080/auth"
+      },
+	  {
+        "name": "AUTH_SERVER_REALM",
+        "label": "Keycloak realm",
+        "default": "activage"
+      },
+	  {
+        "name": "CLIENT_ID",
+        "label": "Keycloak client id",
+        "default": "aiotes-api"
+      },
+	  {
+        "name": "CLIENT_SECRET",
+        "label": "Client secret",
+        "default": "ac436509-3d33-4dda-b505-34e2d6b439d1"
+      }
+    ]
+  },
+  {
+    "type": 2,
+    "name": "keycloak",
+	"title": "Keycloak",
+    "description": "Keycloak",
+    "logo": "https://i.imgur.com/G0rE67b.png",
+    "categories": ["security"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/keycloak/docker-compose.yml"
+    },
+    "env": [
+      {
+        "name": "KEYCLOAK_USER",
+        "label": "Keycloak admin name"
+      },
+	  {
+        "name": "KEYCLOAK_PASSWORD",
+        "label": "Keycloak admin password"
+      }
+    ]
+  },
+  {
+    "type": 2,
+    "name": "sil",
+	"title": "SIL",
+    "description": "SIL",
+    "logo": "https://i.imgur.com/2d6ZnXo.png",
+    "categories": ["interoperability", "core"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/sil/docker-compose.yml"
+    },
+    "env": [
+      {
+        "name": "INTERMW_CALLBACK_PROTOCOL",
+        "label": "HTTP or HTTPS callback",
+		"default": "https",
+	    "preset": true
+      },
+      {
+        "name": "INTERMW_VERSION",
+        "label": "intermw version",
+        "default": "v2.3.1",
+	    "preset": true
+      },
+	  {
+        "name": "IPSM_VERSION",
+        "label": "IPSM version",
+        "default": "0.8.8",
+	    "preset": true
+      },
+	  {
+        "name": "RABBITMQ_USER",
+        "label": "RabbitMQ user",
+        "default": "admin",
+	    "preset": true
+      },
+	  {
+        "name": "RABBITMQ_PASS",
+        "label": "RabbitMQ password",
+        "default": "admin",
+	    "preset": true
+      }
+    ]
+  },
+  {
+    "type": 1,
+	"title": "SIL data volumes management",
+    "description": "IPSM data volumes initialization",
+	"logo": "https://i.imgur.com/0jOyD8G.png",
+	"categories": ["interoperability", "deployment"],
+    "name": "sil-mngt",
+	"platform": "linux",
+    "registry": "docker-activage.satrd.es",
+    "image": "sil-mngt:0.0.1",
+    "volumes": [
+      {
+        "container": "/var/run/docker.sock",
+        "bind": "/var/run/docker.sock"
+      }
+    ]
+  },
+  {
+    "type": 2,
+    "name": "deployment-tools",
+	"title": "Deployment Tools",
+    "description": "Component configurator, Deployment manager, Maintenance panel and Update manager",
+    "logo": "https://i.imgur.com/pOwA6nJ.png",
+    "categories": ["management", "deployment", "tools"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/deployment-tools/docker-compose.yml"
+    },
+    "env": [
+      {
+        "name": "CLIENT_ID",
+        "label": "SIL Client ID",
+        "default": "configurator"
+      },
+	  {
+        "name": "SIL_URL",
+        "label": "SIL URL",
+        "default": "http://intermw:8080",
+	    "preset": true
+      },
+	  {
+        "name": "BASE_PATH",
+        "label": "Intermw base path",
+        "default": "/api/mw2mw/",
+	    "preset": true
+      },
+	  {
+        "name": "DOCKER",
+        "default": "True",
+	    "preset": true
+      },
+	  {
+        "name": "CALLBACK_URL",
+        "label": "Callback URL",
+        "default": "http://component-configurator:8080/api/v1/notify",
+	    "preset": true
+      },
+	  {
+        "name": "RECEIVING_CAPACITY",
+        "label": "Messages per notification",
+        "default": "1",
+	    "preset": true
+      },
+	  {
+        "name": "RESPONSE_FORMAT",
+        "label": "Message format",
+        "default": "JSON_LD",
+	    "preset": true
+      },
+	  {
+        "name": "RESPONSE_DELIVERY",
+        "label": "Response delivery mechanism",
+        "select": [
+          {
+            "text": "SERVER_PUSH",
+            "value": "SERVER_PUSH",
+            "default": true
+          },
+          {
+            "text": "CLIENT_PULL",
+            "value": "CLIENT_PULL"
+          }
+        ]
+      },
+	  {
+        "name": "METADATA_STORAGE_SERVER_URL",
+        "label": "Metadata Storage Server URL",
+        "default": "http://metadata_storage_server:8081",
+	    "preset": true
+      },
+	  {
+        "name": "BASE_URL_PROTOCOL",
+        "label": "AIoTES API protocol",
+        "default": "https",
+	    "preset": true
+      },
+	  {
+        "name": "SECURITY_REALM",
+        "label": "Security realm for authentication",
+        "default": "activage"
+      },
+	  {
+        "name": "SECURITY_CLIENT_ID",
+        "label": "Client id for authentication",
+        "default": "tools-user-login"
+      }
+    ]
+  },
+  {
+    "type": 2,
+    "name": "data-lake",
+	"title": "AIoTES Data Lake",
+    "description": "AIoTES Data Lake",
+	"logo": "https://i.imgur.com/7qfYzQT.png",
+    "categories": ["analytics", "core"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/datalake/docker-compose.yml"
+    }
+  },
+  {
+    "type": 2,
+    "name": "data-analytics",
+	"title": "AIoTES Data Analytics",
+    "description": "AIoTES Data Analytics",
+    "logo": "https://i.imgur.com/7qfYzQT.png",
+    "categories": ["analytics", "core"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/data-analytics-component/docker-compose.yml"
+    }
+  },
+  {
+    "type": 2,
+    "title": "File transfer service",
+    "name": "files-transfer",
+    "description": "Files transfer service",
+    "logo": "https://i.imgur.com/7qfYzQT.png",
+    "categories": ["analytics", "tools"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/files-transfer/docker-compose.yml"
+    },
+	"env": [
+	  {
+        "name": "BASE_URL_PROTOCOL",
+        "label": "AIoTES API protocol",
+        "default": "https",
+	    "preset": true
+      }
+	]
+  },
+  {
+    "type": 2,
+    "name": "data-analyser",
+	"title": "Data Analyser",
+    "description": "Data Analyser",
+    "logo": "https://i.imgur.com/7qfYzQT.png",
+    "categories": ["analytics", "tools"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/data-analyser/docker-compose.yml"
+    },
+	"env": [
+	  {
+        "name": "BASE_URL_PROTOCOL",
+        "label": "AIoTES API protocol",
+        "default": "https",
+	    "preset": true
+      }
+	]
+  },
+  {
+    "type": 2,
+    "name": "data-manipulator",
+	"title": "Data Manipulator",
+    "description": "Data Manipulator",
+    "logo": "https://i.imgur.com/7qfYzQT.png",
+    "categories": ["analytics", "tools"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/data-manipulator/docker-compose.yml"
+    },
+	"env": [
+	  {
+        "name": "BASE_URL_PROTOCOL",
+        "label": "AIoTES API protocol",
+        "default": "https",
+	    "preset": true
+      }
+	]
+  },
+  {
+    "type": 2,
+    "name": "visual-analytics",
+	"title": "Visual Analytics",
+    "description": "Visual Analytics",
+    "logo": "https://i.imgur.com/7qfYzQT.png",
+    "categories": ["analytics", "tools"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/visual-analytics/docker-compose.yml"
+    },
+	"env": [
+	  {
+        "name": "BASE_URL_PROTOCOL",
+        "label": "AIoTES API protocol",
+        "default": "https",
+	    "preset": true
+      }
+	]
+  },
+  {
+    "type": 2,
+    "name": "query-translator",
+    "title": "Query Translator",
+    "description": "Query Translator",
+    "logo": "https://i.imgur.com/7qfYzQT.png",
+    "categories": ["analytics", "tools"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/query-translator/docker-compose.yml"
+    },
+    "env": [
+	  {
+        "name": "BASE_URL_PROTOCOL",
+        "label": "AIoTES API protocol",
+        "default": "https",
+	    "preset": true
+      }
+	]
+  },
+  {
+    "type": 2,
+    "name": "device-manager",
+	"title": "Device manager",
+    "description": "Device manager",
+    "logo": "https://i.imgur.com/0jOyD8G.png",
+    "categories": ["deployment", "tools"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/device-manager/docker-compose.yml"
+    },
+    "env": [
+	  {
+        "name": "METADATA_STORAGE",
+        "label": "Metadata Storage Server URL",
+        "default": "http://metadata_storage_server:8081",
+	    "preset": true
+      },
+	  {
+        "name": "BASE_URL_PROTOCOL",
+        "label": "AIoTES API protocol",
+        "default": "https",
+	    "preset": true
+      },
+	  {
+        "name": "KEYCLOAK_CLIENT_NAME",
+        "label": "Client name for Keycloak",
+        "default": "tools-login-secret"
+      },
+	  {
+        "name": "KEYCLOAK_CLIENT_SECRET",
+        "label": "Client secret for Keycloak",
+        "default": "7a9dad7a-f19f-4c7b-8a04-312bf17e0886"
+      }
+    ]
+  },
+  {
+    "type": 2,
+    "name": "service-manager",
+	"title": "Service manager",
+    "description": "Service manager",
+    "logo": "https://i.imgur.com/0jOyD8G.png",
+    "categories": ["deployment", "tools"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/service-manager/docker-compose.yml"
+    },
+    "env": [
+	  {
+        "name": "BACKEND_URL",
+        "label": "Service registry URL",
+        "default": "http://json-server/",
+	    "preset": true
+      },
+	  {
+        "name": "BASE_URL_PROTOCOL",
+        "label": "AIoTES API protocol",
+        "default": "https",
+	    "preset": true
+      },
+	  {
+        "name": "KEYCLOAK_CLIENT_NAME",
+        "label": "Client name for Keycloak",
+        "default": "tools-login-secret"
+      },
+	  {
+        "name": "KEYCLOAK_CLIENT_SECRET",
+        "label": "Client secret for Keycloak",
+        "default": "7a9dad7a-f19f-4c7b-8a04-312bf17e0886"
+      }
+    ]
+  },
+  {
+    "type": 2,
+    "name": "semantic-auto-discovery-platform",
+	"title": "Semantic auto-discovery platform",
+    "description": "Semantic auto-discovery platform",
+    "logo": "https://i.imgur.com/0jOyD8G.png",
+    "categories": ["deployment", "tools"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/semantic-auto-discovery-platform/docker-compose.yml"
+    },
+    "env": [
+	  {
+        "name": "BASE_URL_PROTOCOL",
+        "label": "AIoTES API protocol",
+        "default": "https",
+	    "preset": true
+      },
+	  {
+        "name": "API_PATH",
+        "label": "SIL endpoint",
+        "default": "/sil/",
+	    "preset": true
+      },
+	  {
+        "name": "CLIENT_ID",
+        "label": "SIL Client Id",
+        "default": "discovery"
+      },
+	  {
+        "name": "KEYCLOAK_CLIENT_NAME",
+        "label": "Client name for Keycloak",
+        "default": "tools-login-secret"
+      },
+	  {
+        "name": "KEYCLOAK_CLIENT_SECRET",
+        "label": "Client secret for Keycloak",
+        "default": "7a9dad7a-f19f-4c7b-8a04-312bf17e0886"
+      }
+    ]
+  },
+  {
+    "type": 2,
+    "name": "ontology-explorer",
+	"title": "Ontology explorer, Device Semantics Editor and Service Semantics Editor",
+    "description": "Ontology explorer, Device Semantics Editor and Service Semantics Editor",
+    "logo": "https://i.imgur.com/Oyosd2m.png",
+    "categories": ["development", "tools"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/ont-explorer/docker-compose.yml"
+    },
+    "env": [
+	  {
+        "name": "BASE_URL_PROTOCOL",
+        "label": "AIoTES API protocol",
+        "default": "https",
+	    "preset": true
+      },
+	  {
+        "name": "KEYCLOAK_CLIENT_NAME",
+        "label": "Client name for Keycloak",
+        "default": "tools-login-secret"
+      },
+	  {
+        "name": "KEYCLOAK_CLIENT_SECRET",
+        "label": "Client secret for Keycloak",
+        "default": "7a9dad7a-f19f-4c7b-8a04-312bf17e0886"
+      }
+    ]
+  },
+  {
+    "type": 2,
+    "name": "datamodel-workbench",
+	"title": "Datamodel workbench and metadata storage explorer",
+    "description": "Datamodel workbench and metadata storage explorer",
+    "logo": "https://i.imgur.com/Oyosd2m.png",
+    "categories": ["development", "tools"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/datamodel-workbench/docker-compose.yml"
+    },
+    "env": [
+	  {
+        "name": "BASE_URL_PROTOCOL",
+        "label": "AIoTES API protocol",
+        "default": "https",
+	    "preset": true
+      },
+	  {
+        "name": "PATH_MDS",
+        "label": "Metadata Storage Server base path",
+        "default": "/datalake/metadataStorage/",
+	    "preset": true
+      },
+	  {
+        "name": "PATH_IDS",
+        "label": "Independent Data Storage base path",
+        "default": "/datalake/",
+	    "preset": true
+      },
+	  {
+        "name": "PATH_QE",
+        "label": "Query Execution Component base path",
+        "default": "/datalake/dataIntegrationEngine/",
+	    "preset": true
+      },
+	  {
+        "name": "KEYCLOAK_REALM",
+        "label": "Security realm for authentication",
+        "default": "activage"
+      },
+	  {
+        "name": "KEYCLOAK_RESOURCE",
+        "label": "Client id for authentication",
+        "default": "tools-user-login"
+      }
+    ]
+  },
+  {
+    "type": 2,
+    "name": "aiotes-ide",
+	"title": "AIoTES IDE",
+    "description": "AIoTES IDE, Service Composer, ClickDigital, Code Generator and Source Code Templates",
+    "logo": "https://i.imgur.com/JOHPEqQ.png",
+    "categories": ["development", "tools", "ide"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/ide/docker-compose.yml"
+    },
+    "env": [
+	  {
+        "name": "BASE_URL_PROTOCOL",
+        "label": "AIoTES API protocol",
+        "default": "https",
+	    "preset": true
+      },
+	  {
+        "name": "KEYCLOAK_REALM",
+        "label": "Security realm for authentication",
+        "default": "activage"
+      },
+	  {
+        "name": "KEYCLOAK_CLIENT_ID",
+        "label": "Client id for authentication",
+        "default": "tools-user-login"
+      },
+	  {
+        "name": "KEYCLOAK_CLIENT_SECRET",
+        "label": "Client secret for authentication",
+        "default": "null"
+      }
+    ]
+  },
+  {
+    "type": 2,
+    "name": "sil-tool",
+	"title": "sil tool",
+    "description": "AIoTES SIL Tool",
+    "logo": "https://i.imgur.com/JOHPEqQ.png",
+    "categories": ["development", "tools"],
+    "platform": "linux",
+    "repository": {
+      "url": "https://github.com/AIoTES/Management-Docker-deployment",
+      "stackfile": "stacks/siltool/docker-compose.yml"
+    }
+  }
+]

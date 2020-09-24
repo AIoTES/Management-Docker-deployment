@@ -1,0 +1,14 @@
+version: "3"
+services:
+    filesserver:
+        image: "docker-activage.satrd.es/filesserver:1.1"
+        environment:
+            - "KEY_CLOACK=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}"
+            - "PORT=3000"
+        expose:
+            - "3000"
+
+networks:
+  default:
+    external:
+      name: aiotes

@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  
+  analyser:
+    image: docker-activage.satrd.es/dataanalyzer:1.6
+    restart: unless-stopped
+    environment:
+      - "LOGIN_PATH=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/services/fileserver/api/activage/login"
+      - "ANALYTICS_URL=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/analytics/"
+      - "SEMANTIC_TRANSLATION=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/services/jsontranslator/"
+      - "DATA_LAKE=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/datalake/dataIntegrationEngine/"
+      - "TRANFSER_FILES=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/services/fileserver/api/activage"
+    command:
+        - "/bin/bash"
+        - "/usr/share/nginx/html/start.sh"
+
+networks:
+  default:
+    external:
+      name: aiotes
+

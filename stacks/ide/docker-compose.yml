@@ -1,0 +1,66 @@
+version: '3.3'
+services:
+  ide:
+    image: docker-activage.satrd.es/aiotes-ide:1.0.0
+    expose:
+      - "80"
+    restart: unless-stopped
+  
+  nodered:
+    image: docker-activage.satrd.es/activage-nr-service-composition:0.0.3
+    expose:
+      - "1880"
+    restart: unless-stopped
+  
+  codegenerator-backend:
+    image: docker-activage.satrd.es/code.generator:latest
+    expose:
+       - '8181'
+  
+  codegenerator-frontend:
+    image: docker-activage.satrd.es/code.generator.ui:latest
+    expose:
+       - '80'
+    environment:
+      - AIOTES_HOSTNAME=${AIOTES_HOSTNAME}
+      - AIOTES_API_PORT=${AIOTES_API_PORT}
+      - CODEGENERATOR_PATH=/development/codegenerator
+  
+  db:
+    image: docker-activage.satrd.es/mongo:3.6
+    expose:
+      - "27017"
+    restart: unless-stopped
+    volumes:
+      - mongo-db:/data/db
+  
+  backend:
+    image: docker-activage.satrd.es/clickdigital-backend:integrated_8
+    expose:
+      - "8080"
+    depends_on:
+      - db
+    restart: unless-stopped
+  
+  frontend:
+    image: docker-activage.satrd.es/clickdigital-frontend:integrated_10
+    expose:
+      - "80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    environment:
+      - HTTP_MODE=${BASE_URL_PROTOCOL}://
+      - BASE_URL=${AIOTES_HOSTNAME}:${AIOTES_API_PORT}
+      - KEYCLOAK_URL=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/auth
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM}
+      - KEYCLOAK_CLIENT=${KEYCLOAK_CLIENT_ID}
+
+volumes:
+  mongo-db:
+
+networks:
+  default:
+    external:
+      name: aiotes
+

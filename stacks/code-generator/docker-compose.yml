@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  
+  code-generator:
+    image: docker-activage.satrd.es/code.generator:latest
+    restart: unless-stopped
+    environment:
+      - AIOTES_HOSTNAME=${AIOTES_HOSTNAME}
+      - AIOTES_API_PORT=${AIOTES_API_PORT}
+      - CODEGENERATOR_PATH=/development/codegenerator
+
+networks:
+  default:
+    external:
+      name: aiotes

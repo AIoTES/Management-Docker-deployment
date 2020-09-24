@@ -1,0 +1,96 @@
+version: '3.3'
+services:
+# Query mechanism
+    query:
+        image: docker-activage.satrd.es/dl-query-component:0.0.4
+        expose:
+        - "4570"
+        links:
+        - json-server
+        command: http://json-server/
+        restart: unless-stopped
+    json-server:
+        image: docker-activage.satrd.es/json-server
+        expose:
+        - "80"
+        configs:
+        - source: db-conf
+          target: /data/db.json
+        restart: unless-stopped
+    
+    syntactic-translator:
+        image: docker-activage.satrd.es/syntactic-translator:0.0.2
+        expose:
+        - "4568"
+        restart: unless-stopped
+
+# Independent Data Storage        
+    influxdb:
+        image: influxdb
+        expose:
+        - "8086"
+        volumes:
+        - "influxdb_data:/var/lib/influxdb"
+        restart: unless-stopped
+    ids:
+        image: docker-activage.satrd.es/independentdatastorage:0.8
+        expose:
+        - "4567"
+        environment:
+          HOST_INFLUXDB: influxdb
+          PORT_INFLUXDB: 8086
+        links:
+        - influxdb
+        restart: unless-stopped
+ 
+# Data indexing service 
+    dataintergration-app:
+        image: docker-activage.satrd.es/dl-data-indexing:latest
+        environment:
+            # - _JAVA_OPTIONS=-Xmx512m -Xms256m
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATA_MONGODB_URI=mongodb://dataintergration-mongodb:27017
+            - SPRING_DATA_MONGODB_DATABASE=DataIntergration
+            - SIMLIFE_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=dataintergration-elasticsearch:9300
+        restart: unless-stopped
+    
+    dataintergration-mongodb:
+        image: mongo:3.6.3
+        volumes:
+            - mongodata-integration:/data/db/
+        restart: unless-stopped
+    dataintergration-elasticsearch:
+        image: elasticsearch:5.6.5
+        volumes:
+            - elasticsearch-data:/usr/share/elasticsearch/data/
+        command: -Enetwork.host=0.0.0.0 -Ediscovery.type=single-node
+        restart: unless-stopped
+
+# Metadata storage server
+    metadata_storage_server:
+        image: docker-activage.satrd.es/metadata-storage-server:0.1.2
+        restart: unless-stopped
+        links:
+            - mongo
+        depends_on:
+            - mongo
+    mongo:
+        image: mongo:3
+        volumes:
+            - mongodata:/data/db
+    
+volumes:
+  influxdb_data:
+  mongodata:
+  mongodata-integration:
+  elasticsearch-data:
+
+configs:
+  db-conf:
+    file: ./data/db.json
+
+networks:
+  default:
+    external:
+      name: aiotes

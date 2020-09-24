@@ -1,0 +1,1674 @@
+https:
+  port: ${BRIDGES_CALLBACK_PORT}
+#  hostname: ${AIOTES_HOSTNAME}
+  tls: 
+    "default": 
+      key: /var/lib/certs/live/aiotes/privkey.pem
+      cert: /var/lib/certs/live/aiotes/cert.pem
+      ca:
+        - /var/lib/certs/live/aiotes/chain.pem
+#        - /var/lib/chain/chain.pem
+
+admin:
+  port: 9876
+  host: localhost
+
+apiEndpoints:
+# Certbot
+  certbot:
+    host: '*'
+    paths: '/.well-known/*'
+# Authentication
+  auth:
+    host: '*'
+    paths: '/security/auth'
+  keycloak:
+    host: '*'
+    paths: ['/auth', '/auth/*']
+# Swagger
+  swagger:
+    host: '*'
+    paths: ['/swagger', '/swagger/*']
+# SIL
+  intermw:
+    host: '*'
+    paths: '/sil/mw2mw/*'
+  ipsm:
+    host: '*'
+    paths: '/sil/ipsm/*'
+  callback:
+    host: '*'
+    paths: '/sil/callback/*'
+# Data Lake
+  ids:
+    host: '*'
+    paths: '/datalake/independentStorage/*'
+  data-integration-engine-indexing:
+    host: '*'
+    paths: '/datalake/dataIntegrationEngine/api/*'
+  data-integration-engine:
+    host: '*'
+    paths: '/datalake/dataIntegrationEngine/*'
+  metadata-storage:
+    host: '*'
+    paths: '/datalake/metadataStorage/*'
+# Data Analytics
+  # Visual analytics
+  visual-analytics-login:
+    host: '*'
+    paths: ['/analytics/visual', '/analytics/visual/']
+  visual-analytics-login-page:
+    host: '*'
+    paths: ['/analytics/visual/login*']
+  visual-analytics:
+    host: '*'
+    paths: '/analytics/visual/*'
+  visual-analytics-charts:
+    host: '*'
+    paths: '/assets/data/charts/*'
+  visual-analytics-fonts:
+    host: '*'
+    paths: '/assets/fonts/analytics-font/*'
+  # Data analytics back end
+  data-analytics:
+    host: '*'
+    paths: '/analytics/*'
+# Development tools
+  # IDE
+  ide-nodered-red:
+    host: '*'
+    paths: ['/development/ide/red/*', '/development/ide/advanced/red/*']
+  ide-nodered-vendor:
+    host: '*'
+    paths: ['/development/ide/vendor/*', '/development/ide/advanced/vendor/*']
+  ide-nodered-theme:
+    host: '*'
+    paths: ['/development/ide/theme/*', '/development/ide/advanced/theme/*']
+  ide-nodered-locals:
+    host: '*'
+    paths: ['/development/ide/locales/*', '/development/ide/advanced/locales/*']
+  ide-nodered-settings:
+    host: '*'
+    paths: ['/development/ide/settings*', '/development/ide/advanced/settings*']
+  ide-nodered-library:
+    host: '*'
+    paths: ['/development/ide/library/*', '/development/ide/advanced/library/*']
+  ide-nodered-context:
+    host: '*'
+    paths: ['/development/ide/context/*', '/development/ide/advanced/context/*']
+  ide-nodered-nodes:
+    host: '*'
+    paths: ['/development/ide/nodes*', '/development/ide/advanced/nodes*']
+  ide-nodered-icons:
+    host: '*'
+    paths: ['/development/ide/icons*', '/development/ide/advanced/icons*']
+  ide-nodered-debug:
+    host: '*'
+    paths: ['/development/ide/debug/*', '/development/ide/advanced/debug/*']
+  ide-nodered-flows:
+    host: '*'
+    paths: ['/development/ide/flows*', '/development/ide/advanced/flows*']
+  ide-nodered-ui_base:
+    host: '*'
+    paths: ['/development/ide/ui_base/*', '/development/ide/advanced/ui_base/*']
+  ide-nodered-uisettings:
+    host: '*'
+    paths: ['/development/ide/uisettings*', '/development/ide/advanced/uisettings*']
+  ide-nodered-blank:
+    host: '*'
+    paths: ['/development/ide/blank','/development/ide/blank/*', '/development/ide/advanced/blank', '/development/ide/advanced/blank/*']
+  ide:
+    host: '*'
+    paths: ['/development/ide', '/development/ide/*']
+  # Service composer
+  service-composer-comms:
+    host: '*'
+    paths: ['/development/servicecomposer/comms', '/development/servicecomposer/comms/*']
+  service-composer:
+    host: '*'
+    paths: ['/development/servicecomposer', '/development/servicecomposer/*']
+  # ClickDigital
+  clickdigital-backend:
+    host: '*'
+    paths: '/development/clickdigital/api/*'
+  clickdigital:
+    host: '*'
+    paths: ['/development/clickdigital', '/development/clickdigital/*']
+  # Code generator
+  codegenerator-ui:
+    host: '*'
+    paths: ['/development/codegenerator/ui*']
+  codegenerator:
+    host: '*'
+    paths: ['/development/codegenerator', '/development/codegenerator/*']
+  # Code templates
+  # SIL tool
+  siltool-auth:
+    host: '*'
+    paths: ['/development/siltool/api/request-token']
+  siltool-backend:
+    host: '*'
+    paths: ['/development/siltool/api/*']
+  siltool:
+    host: '*'
+    paths: ['/development/siltool', '/development/siltool/*']
+  # Ontology explorer, device semantics editor, service semantics editor
+  ontology-explorer-redirect:
+    host: '*'
+    paths: ['/web/activage/semantics/redirect*']
+  ontology-explorer:
+    host: '*'
+    paths: ['/development/semantics', '/development/semantics/*']
+  ontology-explorer-resources:
+    host: '*'
+    paths: '/OntologyVisualizer-portlet/*'
+  ontology-explorer-data:
+    host: '*'
+    paths: ['/web/activage/menu', '/web/activage/menu/*', '/web/activage/OntologyVisualizer-portlet/*']
+  # Query translator
+  query-translator:
+    host: '*'
+    paths: ['/development/query-translator', '/development/query-translator/*']
+  # Data manipulator
+  data-manipulator:
+    host: '*'
+    paths: ['/development/data-manipulator', '/development/data-manipulator/*']
+  # Data analyzer
+  data-analyzer-login:
+    host: '*'
+    paths: ['/development/data-analyzer', '/development/data-analyzer/']
+  data-analyzer-login-page:
+    host: '*'
+    paths: ['/development/data-analyzer/login*']
+  data-analyzer:
+    host: '*'
+    paths: '/development/data-analyzer/*'
+  # Feature / result viewer
+  feature-result-viewer-login:
+    host: '*'
+    paths: ['/development/feature-result-viewer', '/development/feature-result-viewer/']
+  feature-result-viewer-login-page:
+    host: '*'
+    paths: ['/development/feature-result-viewer/login*']
+  feature-result-viewer:
+    host: '*'
+    paths: '/development/feature-result-viewer/*'
+  # Visualization explorer
+  # Datamodel workbench
+  datamodel-workbench:
+    host: '*'
+    paths: ['/development/datamodel-workbench/']
+  datamodel-workbench-api:
+    host: '*'
+    paths: '/development/datamodel-workbench/*'
+  # Metadata storage explorer (same App as datamodel workbench)
+  metadata-storage-explorer:
+    host: '*'
+    paths: ['/development/metadata-storage-explorer/']
+  metadata-storage-explorer-api:
+    host: '*'
+    paths: '/development/metadata-storage-explorer/*'
+# Deployment tools
+  # Device manager
+  device-manager-redirect:
+    host: '*'
+    paths: ['/web/activage/device-manager/redirect*']
+  device-manager:
+    host: '*'
+    paths: ['/deployment/device-manager', '/deployment/device-manager/*']
+  device-manager-data:
+    host: '*'
+    paths: ['/web/activage/device-manager*', '/web/activage/Device-Manager-portlet/*']
+  device-manager-resources:
+    host: '*'
+    paths: '/Device-Manager-portlet/*'
+  # Service manager
+  service-manager-redirect:
+    host: '*'
+    paths: ['/web/activage/service-manager/redirect*']
+  service-manager:
+    host: '*'
+    paths: ['/deployment/service-manager', '/deployment/service-manager/*']
+  service-manager-data:
+    host: '*'
+    paths: ['/web/activage/service-manager*', '/web/activage/Service-Manager-portlet/*']
+  service-manager-resources:
+    host: '*'
+    paths: '/Service-Manager-portlet/*'
+  # Semantic auto-discovery platform
+  semantic-auto-discovery-platform-redirect:
+    host: '*'
+    paths: ['/web/activage/discovery-platform/redirect*']
+  semantic-auto-discovery-platform:
+    host: '*'
+    paths: ['/deployment/discovery-platform', '/deployment/discovery-platform/*']
+  semantic-auto-discovery-platform-data:
+    host: '*'
+    paths: ['/web/activage/semantic-auto-discovery-platform*', '/web/activage/Semantic-auto-discovery-platform-portlet/*']
+  semantic-auto-discovery-platform-resources:
+    host: '*'
+    paths: ['/Semantic-auto-discovery-platform-portlet/*', '/html/semantic_css/*']
+  # Common resources for device manager, service manager, ontology explorer and auto-discovery platform
+  liferay-common:
+    host: '*'
+    paths: ['/html/css/*', '/html/themes/classic/*', '/html/js/*', '/image/*',  '/combo/*']
+  # Bechmarking Tool
+    #TODO
+  # kpi:
+    # host: '*'
+    # paths: '/management/kpi/*'
+  # Deployment manager
+  deployment-manager:
+    host: '*'
+    paths: ['/deployment/component-configuration/api/v1/deployments', '/deployment/component-configuration/api/v1/deployments/*']
+  # Maintenance panel
+  maintenance-panel:
+    host: '*'
+    paths: ['/deployment/component-configuration/api/v1/records', '/deployment/component-configuration/api/v1/records/*']
+  # Update manager
+  update-manager:
+    host: '*'
+    paths: ['/deployment/component-configuration/api/v1/registry', '/deployment/component-configuration/api/v1/registry/*']
+  # Component configurator
+  component-configurator-platforms:
+    host: '*'
+    paths: '/deployment/component-configuration/api/v1/platforms*'
+  component-configurator-clients:
+    host: '*'
+    paths: '/deployment/component-configuration/api/v1/clients*'
+  component-configurator-devices:
+    host: '*'
+    paths: '/deployment/component-configuration/api/v1/devices*'
+  deployment-tools-frontend:
+    host: '*'
+    paths: ['/deployment/component-configuration', '/deployment/component-configuration/*']
+# Ad-hoc services
+  # Service registry prototype (to use with the Data Integration Engine)
+  service-registry:
+    host: '*'
+    paths: '/services/serviceRegistry/*'
+  # JSON translator
+  json-translator:
+    host: '*'
+    paths: '/services/jsontranslator/*'
+  # Clipboard service
+  clipboard:
+    host: '*'
+    paths: '/services/clipboard/*'
+  # File transfer service
+  file-server:
+    host: '*'
+    paths: '/services/fileserver/*'
+  # Security
+  # webapp-login:
+    # host: '*'
+    # paths: '/*'
+
+serviceEndpoints:
+#CERTBOT
+  certbot:
+    url: 'http://certbot/.well-known/'
+# AUTHENTICATION
+  auth:
+    url: '${AUTH_SERVER_URL}/realms/${AUTH_SERVER_REALM}/protocol/openid-connect/token'
+  keycloak:
+    url: '${AUTH_SERVER_URL}/'
+# SWAGGER
+  swagger:
+    url: 'http://swagger-ui:8080/'
+# SIL
+  intermw-api:
+    url: 'http://intermw:8080/api/mw2mw/'
+  ipsm-api:
+    url: 'http://ipsm:8080/'
+  intermw-callback:
+    url: 'http://intermw:${BRIDGES_CALLBACK_PORT}/'
+# DATA LAKE
+  ids-api:
+    url: 'http://ids:4567/independentStorage/'
+  data-integration-engine-indexing-api:
+    url: 'http://dataintergration-app:8080/'
+  data-integration-engine-api:
+    url: 'http://query:4570/'
+  metadata-storage-api:
+    url: 'http://metadata_storage_server:8081/api/'
+# Data Analytics
+  visual-analytics-web:
+    url: 'http://visual-analytics:4651/'
+  visual-analytics-login-page:
+    url: 'http://visual-analytics:4651/login'
+  visual-analytics-charts:
+    url: 'http://visual-analytics:4651/assets/data/charts'
+  visual-analytics-fonts:
+    url: 'http://visual-analytics:4651/assets/fonts/analytics-font'
+  data-analytics-api:
+    url: 'http://data-analytics-proxy:8070/'
+# Development tools
+  # IDE
+  ide-web:
+    url: 'http://ide/'
+  # Service composer
+  service-composer-web:
+    url: 'http://nodered:1880/'
+  service-composer-comms:
+    url: 'http://nodered:1880/comms'
+  service-composer-vendor:
+    url: 'http://nodered:1880/vendor'   
+  service-composer-red:
+    url: 'http://nodered:1880/red'
+  service-composer-theme:
+    url: 'http://nodered:1880/theme'
+  service-composer-locals:
+    url: 'http://nodered:1880/locales'
+  service-composer-settings:
+    url: 'http://nodered:1880/settings'
+  service-composer-library:
+    url: 'http://nodered:1880/library'
+  service-composer-context:
+    url: 'http://nodered:1880/context'
+  service-composer-nodes:
+    url: 'http://nodered:1880/nodes'
+  service-composer-icons:
+    url: 'http://nodered:1880/icons'
+  service-composer-debug:
+    url: 'http://nodered:1880/debug'
+  service-composer-flows:
+    url: 'http://nodered:1880/flows'
+  service-composer-ui_base:
+    url: 'http://nodered:1880/ui_base'
+  service-composer-uisettings:
+    url: 'http://nodered:1880/uisettings'
+  service-composer-blank:
+    url: 'http://nodered:1880/blank'
+  # ClickDigital
+  clickdigital-backend:
+    url: 'http://backend:8080/'
+  clickdigital-web:
+    url: 'http://frontend/development/clickdigital/'
+  # Code generator
+  codegenerator-ui:
+    url: 'http://codegenerator-frontend'
+  codegenerator-api:
+    url: 'http://codegenerator-backend:8181/GenerateCode'
+  # Code templates
+  # SIL tool
+  siltool-auth:
+    url: 'http://siltool:8080/api/request-token'
+  siltool-backend:
+    url: 'http://siltool:8080/api'
+  siltool-web:
+    url: 'http://siltool:8080/'
+  # Ontology explorer, device semantics editor, service semantics editor
+  ontology-explorer-web:
+    url: 'http://ontexplorer:9082/web/activage/menu'
+  ontology-explorer-redirect:
+    url: 'http://ontexplorer:9082/web/activage/semantics/redirect'
+  ontology-explorer-resources:
+    url: 'http://ontexplorer:9082'
+  # Query translator
+  query-translator-web:
+    url: 'http://query-translator:4653'
+  # Data manipulator
+  data-manipulator-web:
+    url: 'http://data-manipulator:4652'
+  # Data analyzer
+  data-analyzer-web:
+    url: 'http://analyser:4650/#/pages/data-analyzer'
+  data-analyzer-login-page:
+    url: 'http://analyser:4650/#/pages/data-analyzer/login'
+  # Feature / result viewer
+  feature-result-viewer-web:
+    url: 'http://feature-result-viewer/'
+  feature-result-viewer-login-page:
+    url: 'http://feature-result-viewer/login'
+  # Visualization explorer
+  # Datamodel workbench and Metadata storage explorer
+  datamodel-workbench-web:
+    url: 'http://datalaketool-app:8080/'
+  datamodel-workbench-api:
+    url: 'http://datalaketool-app:8080/'
+# Deployment tools
+  # Device manager
+  device-manager-web:
+    url: 'http://device-manager:9082/web/activage/device-manager'
+  device-manager-redirect:
+    url: 'http://device-manager:9082/web/activage/device-manager/redirect'
+  device-manager-resources:
+    url: 'http://device-manager:9082'
+  # Service manager
+  service-manager-web:
+    url: 'http://service-manager:9082/web/activage/service-manager'
+  service-manager-redirect:
+    url: 'http://service-manager:9082/web/activage/service-manager/redirect'
+  service-manager-resources:
+    url: 'http://service-manager:9082'
+  # Semantic auto-discovery platform
+  semantic-auto-discovery-platform-web:
+    url: 'http://auto-discovery-platform:9082/web/activage/semantic-auto-discovery-platform/'
+  semantic-auto-discovery-platform-redirect:
+    url: 'http://auto-discovery-platform:9082/web/activage/discovery-platform/redirect'
+  semantic-auto-discovery-platform-resources:
+    url: 'http://auto-discovery-platform:9082'
+  # Common resources for device manager, service manager, ontology explorer and auto-discovery platform
+  liferay-common:
+    urls:
+      - 'http://ontexplorer:9082'
+      - 'http://device-manager:9082'
+      - 'http://service-manager:9082'
+      - 'http://auto-discovery-platform:9082'
+  # Bechmarking
+  # Deployment manager
+  deployment-manager-api:
+    url: 'http://deployment-manager:8080/api/v1/deployments'
+  # Component configurator
+  component-configurator-platforms-api:
+    url: 'http://component-configurator:8080/api/v1/platforms'
+  component-configurator-clients-api:
+    url: 'http://component-configurator:8080/api/v1/clients'
+  component-configurator-devices-api:
+    url: 'http://component-configurator:8080/api/v1/devices'
+  deployment-tools-frontend-api:
+    url: 'http://deployment-tools-frontend:8080/'
+  # Maintenance panel
+  maintenance-panel-api:
+    url: 'http://maintenance-panel:8080/api/v1/records'
+  # Update manager
+  update-manager-api:
+    url: 'http://update-manager:8080/api/v1/registry'
+# Ad-hoc services
+  # Service registry prototype (to use with the Data Integration Engine)
+  service-registry-api:
+     url: 'http://json-server/'
+  # JSON translator
+  json-translator-api:
+    url: 'http://translator:8080/'
+  # Clipboard service
+  clipboard-api:
+    url: 'http://clipboard:3000/'
+  # File server
+  file-server-api:
+    url: 'http://filesserver:3000/'
+  # Security
+  # webapp-login:
+    # url: 'http://webapp-login:8080'
+
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+  - request-transformer
+  - keycloak-protect
+
+pipelines:
+  certbot:
+    apiEndpoints:
+      - certbot
+    policies:
+      - proxy:
+         - action:
+            serviceEndpoint: certbot
+            prependPath:  true
+            ignorePath:   false
+            stripPath:    true
+  auth:
+    apiEndpoints:
+      - auth
+    policies:
+      - request-transformer:
+          - action:
+              body:
+                add:
+                  grant_type: "'password'"
+                  client_id: "'${CLIENT_ID}'"
+                  client_secret: "'${CLIENT_SECRET}'"
+      - proxy:
+          - action:
+              serviceEndpoint: auth
+              xfwd: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+
+  keycloak:
+    apiEndpoints:
+      - keycloak
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: keycloak
+              xfwd: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+
+  swagger-ui:
+    apiEndpoints:
+      - swagger
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: swagger
+              xfwd: true
+
+  intermw:
+    apiEndpoints:
+      - intermw
+    policies:
+      - keycloak-protect:
+          - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:interoperability-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: intermw-api
+              xfwd: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+
+  ipsm:
+    apiEndpoints:
+      - ipsm
+    policies:
+      - keycloak-protect:   
+          - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:interoperability-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: ipsm-api
+              xfwd: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+
+  intermw-callback:
+    apiEndpoints:
+      - callback
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: intermw-callback
+              xfwd: true
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+
+  ids:
+    apiEndpoints:
+      - ids
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:data-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: ids-api
+              xfwd: true
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+  
+  data-integration-engine:
+    apiEndpoints:
+      - data-integration-engine
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:data-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: data-integration-engine-api
+              xfwd: true
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+
+  data-integration-engine-indexing:
+    apiEndpoints:
+      - data-integration-engine-indexing
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:data-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: data-integration-engine-indexing-api 
+              xfwd: true
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+
+  metadata-storage:
+    apiEndpoints:
+      - metadata-storage
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:data-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: metadata-storage-api 
+              xfwd: true
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+
+  visual-analytics-login:
+    apiEndpoints:
+      - visual-analytics-login
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: visual-analytics-web
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  visual-analytics-login-page:
+    apiEndpoints:
+      - visual-analytics-login-page
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: visual-analytics-login-page
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  visual-analytics:
+    apiEndpoints:
+      - visual-analytics
+    policies:
+#      - keycloak-protect:
+#        - action:
+#              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:data-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: visual-analytics-web
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  visual-analytics-charts:
+    apiEndpoints:
+      - visual-analytics-charts
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: visual-analytics-charts
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  visual-analytics-fonts:
+    apiEndpoints:
+      - visual-analytics-fonts
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: visual-analytics-fonts
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  data-analytics:
+    apiEndpoints:
+      - data-analytics
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:data-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: data-analytics-api
+              xfwd: true
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+
+# DEVELOPMENT TOOLS              
+  siltool-auth:
+    apiEndpoints:
+      - siltool-auth
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: siltool-auth
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  siltool-backend:
+    apiEndpoints:
+      - siltool-backend
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:developer")'
+      - proxy:
+          - action:
+              serviceEndpoint: siltool-backend
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  siltool:
+    apiEndpoints:
+      - siltool
+    policies:
+      # - keycloak-protect:
+        # - action:
+              # jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:developer")'
+      - proxy:
+          - action:
+              serviceEndpoint: siltool-web
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+  
+  ide:
+    apiEndpoints:
+      - ide
+    policies:
+      # - keycloak-protect:
+        # - action:
+              # jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:developer")'
+      - proxy:
+          - action:
+              serviceEndpoint: ide-web
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+
+  ide-nodered-vendor:
+    apiEndpoints:
+      - ide-nodered-vendor
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: service-composer-vendor
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+#              secure: false
+
+  ide-nodered-red:
+    apiEndpoints:
+      - ide-nodered-red
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: service-composer-red
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+#              secure: false
+
+  ide-nodered-theme:
+    apiEndpoints:
+      - ide-nodered-theme
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: service-composer-theme
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+#              secure: false
+
+  ide-nodered-locals:
+    apiEndpoints:
+      - ide-nodered-locals
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: service-composer-locals
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+#              secure: false
+
+  ide-nodered-settings:
+    apiEndpoints:
+      - ide-nodered-settings
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: service-composer-settings
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+#              secure: false
+
+  ide-nodered-library:
+    apiEndpoints:
+      - ide-nodered-library
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: service-composer-library
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+#              secure: false
+
+  ide-nodered-context:
+    apiEndpoints:
+      - ide-nodered-context
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: service-composer-context
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+#              secure: false
+
+  ide-nodered-nodes:
+    apiEndpoints:
+      - ide-nodered-nodes
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: service-composer-nodes
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+#              secure: false
+
+  ide-nodered-icons:
+    apiEndpoints:
+      - ide-nodered-icons
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: service-composer-icons
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+#              secure: false
+
+  ide-nodered-debug:
+    apiEndpoints:
+      - ide-nodered-debug
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: service-composer-debug
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+#              secure: false
+
+  ide-nodered-flows:
+    apiEndpoints:
+      - ide-nodered-flows
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: service-composer-flows
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+#              secure: false
+
+  ide-nodered-ui_base:
+    apiEndpoints:
+      - ide-nodered-ui_base
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: service-composer-ui_base
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+#              secure: false
+
+  ide-nodered-uisettings:
+    apiEndpoints:
+      - ide-nodered-uisettings
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: service-composer-uisettings
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+#              secure: false
+ 
+  ide-nodered-blank:
+    apiEndpoints:
+      - ide-nodered-uisettings
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: service-composer-blank
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+#              secure: false
+
+  ide-nodered-comms:
+    apiEndpoints:
+      - service-composer-comms
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: service-composer-comms
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+#              secure: false
+ 
+  service-composer:
+    apiEndpoints:
+      - service-composer
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:developer")'
+      - proxy:
+          - action:
+              serviceEndpoint: service-composer-web
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+#              secure: false
+
+  clickdigital-backend:
+    apiEndpoints:
+      - clickdigital-backend
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:developer")'
+      - proxy:
+          - action:
+              serviceEndpoint: clickdigital-backend
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+  
+  clickdigital:
+    apiEndpoints:
+      - clickdigital
+    policies:
+      # - keycloak-protect:
+        # - action:
+              # jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:developer")'
+      - proxy:
+          - action:
+              serviceEndpoint: clickdigital-web
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              ws: true
+
+  codegenerator-ui:
+    apiEndpoints:
+      - codegenerator-ui
+    policies:
+     # - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: codegenerator-ui
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  codegenerator:
+    apiEndpoints:
+      - codegenerator
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:developer")'
+      - proxy:
+          - action:
+              serviceEndpoint: codegenerator-api
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true   
+
+  query-translator:
+    apiEndpoints:
+      - query-translator
+    policies:
+#      - keycloak-protect:
+#        - action:
+#              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:data-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: query-translator-web
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+ 
+  data-manipulator:
+    apiEndpoints:
+      - data-manipulator
+    policies:
+#      - keycloak-protect:
+#        - action:
+#              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:data-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: data-manipulator-web
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  data-analyzer-login:
+    apiEndpoints:
+      - data-analyzer-login
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: data-analyzer-web
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+ 
+  data-analyzer-login-page:
+    apiEndpoints:
+      - data-analyzer-login-page
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: data-analyzer-login-page
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+ 
+  data-analyzer:
+    apiEndpoints:
+      - data-analyzer
+    policies:
+#      - keycloak-protect:
+#        - action:
+#              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:data-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: data-analyzer-web
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+  
+  ontology-explorer:
+    apiEndpoints:
+      - ontology-explorer
+    policies:
+      # - keycloak-protect:
+        # - action:
+              # jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:data-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: ontology-explorer-web
+              changeOrigin: false
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  ontology-explorer-redirect:
+    apiEndpoints:
+      - ontology-explorer-redirect
+    policies:
+      # - keycloak-protect:
+        # - action:
+              # jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:data-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: ontology-explorer-redirect
+              changeOrigin: false
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              
+  ontology-explorer-resources:
+    apiEndpoints:
+      - ontology-explorer-resources
+      - ontology-explorer-data
+    policies:
+#      - keycloak-protect:
+#        - action:
+#              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:data-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: ontology-explorer-resources
+              changeOrigin: false
+              prependPath:  false
+              ignorePath:   false
+              stripPath:    false
+              xfwd: true
+
+  datamodel-workbench:
+    apiEndpoints:
+      - datamodel-workbench
+      - metadata-storage-explorer
+    policies:
+      # - keycloak-protect:
+        # - action:
+              # jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:data-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: datamodel-workbench-web
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+              hostRewrite: true
+              autoRewrite: true
+
+  datamodel-workbench-api:
+    apiEndpoints:
+      - datamodel-workbench-api
+      - metadata-storage-explorer-api
+    policies:
+      # - keycloak-protect:
+        # - action:
+              # jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:data-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: datamodel-workbench-api
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  feature-result-viewer-login:
+    apiEndpoints:
+      - feature-result-viewer-login
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: feature-result-viewer-web
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  feature-result-viewer-login-page:
+    apiEndpoints:
+      - feature-result-viewer-login-page
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: feature-result-viewer-login-page
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  feature-result-viewer:
+    apiEndpoints:
+      - feature-result-viewer
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:data-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: feature-result-viewer-web
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+  
+# DEPLOYMENT TOOLS
+  device-manager:
+    apiEndpoints:
+      - device-manager
+    policies:
+      # - keycloak-protect:
+        # - action:
+              # jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:deployer")'
+      - proxy:
+          - action:
+              serviceEndpoint: device-manager-web
+              changeOrigin: false
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  device-manager-redirect:
+    apiEndpoints:
+      - device-manager-redirect
+    policies:
+      # - keycloak-protect:
+        # - action:
+              # jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:deployer")'
+      - proxy:
+          - action:
+              serviceEndpoint: device-manager-redirect
+              changeOrigin: false
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  device-manager-resources:
+    apiEndpoints:
+      - device-manager-resources
+      - device-manager-data
+    policies:
+#      - keycloak-protect:
+#        - action:
+#              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:deployer")'
+      - proxy:
+          - action:
+              serviceEndpoint: device-manager-resources
+              changeOrigin: false
+              prependPath:  false
+              ignorePath:   false
+              stripPath:    false
+              xfwd: true
+
+  service-manager:
+    apiEndpoints:
+      - service-manager
+    policies:
+      # - keycloak-protect:
+        # - action:
+              # jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:deployer")'
+      - proxy:
+          - action:
+              serviceEndpoint: service-manager-web
+              changeOrigin: false
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+    
+  service-manager-redirect:
+    apiEndpoints:
+      - service-manager-redirect
+    policies:
+      # - keycloak-protect:
+        # - action:
+              # jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:deployer")'
+      - proxy:
+          - action:
+              serviceEndpoint: service-manager-redirect
+              changeOrigin: false
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  service-manager-resources:
+    apiEndpoints:
+      - service-manager-resources
+      - service-manager-data
+    policies:
+#      - keycloak-protect:
+#        - action:
+#              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:deployer")'
+      - proxy:
+          - action:
+              serviceEndpoint: service-manager-resources
+              changeOrigin: false
+              prependPath:  false
+              ignorePath:   false
+              stripPath:    false
+              xfwd: true
+
+  semantic-auto-discovery-platform:
+    apiEndpoints:
+      - semantic-auto-discovery-platform
+    policies:
+      # - keycloak-protect:
+        # - action:
+              # jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:deployer")'
+      - proxy:
+          - action:
+              serviceEndpoint: semantic-auto-discovery-platform-web
+              changeOrigin: false
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  semantic-auto-discovery-platform-redirect:
+    apiEndpoints:
+      - semantic-auto-discovery-platform-redirect
+    policies:
+      # - keycloak-protect:
+        # - action:
+              # jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:deployer")'
+      - proxy:
+          - action:
+              serviceEndpoint: semantic-auto-discovery-platform-redirect
+              changeOrigin: false
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  semantic-auto-discovery-platform-resources:
+    apiEndpoints:
+      - semantic-auto-discovery-platform-resources
+      - semantic-auto-discovery-platform-data
+    policies:
+#      - keycloak-protect:
+#        - action:
+#              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:deployer")'
+      - proxy:
+          - action:
+              serviceEndpoint: semantic-auto-discovery-platform-resources
+              changeOrigin: false
+              prependPath:  false
+              ignorePath:   false
+              stripPath:    false
+              xfwd: true
+
+  liferay-common:
+    apiEndpoints:
+      - liferay-common
+    policies:
+#      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: liferay-common
+              changeOrigin: false
+              prependPath:  false
+              ignorePath:   false
+              stripPath:    false
+              xfwd: true
+
+  component-configurator-platforms:
+    apiEndpoints:
+      - component-configurator-platforms
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:deployer")'
+      - proxy:
+          - action:
+              serviceEndpoint: component-configurator-platforms-api
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+
+  component-configurator-clients:
+    apiEndpoints:
+      - component-configurator-clients
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:deployer")'
+      - proxy:
+          - action:
+              serviceEndpoint: component-configurator-clients-api
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+
+  component-configurator-devices:
+    apiEndpoints:
+      - component-configurator-devices
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:deployer")'
+      - proxy:
+          - action:
+              serviceEndpoint: component-configurator-devices-api
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+
+  deployment-tools-frontend:
+    apiEndpoints:
+      - deployment-tools-frontend
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: deployment-tools-frontend-api
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+
+  deployment-manager:
+    apiEndpoints:
+      - deployment-manager
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:deployer")'
+      - proxy:
+          - action:
+              serviceEndpoint: deployment-manager-api
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  maintenance-panel:
+    apiEndpoints:
+      - maintenance-panel
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:deployer")'
+      - proxy:
+          - action:
+              serviceEndpoint: maintenance-panel-api
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+  update-manager:
+    apiEndpoints:
+      - update-manager
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:deployer")'
+      - proxy:
+          - action:
+              serviceEndpoint: update-manager-api
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              xfwd: true
+
+# AD-HOC SERVICES  
+  # Service registry prototype (to use with the Data Integration Engine)
+  service-registry:
+    apiEndpoints:
+      - service-registry
+    policies:
+      - keycloak-protect:
+        - action:
+              jsProtect: 'token.hasRole("realm:platform-manager") || token.hasRole("realm:data-expert")'
+      - proxy:
+          - action:
+              serviceEndpoint: service-registry-api 
+              xfwd: true
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+ 
+  # JSON translator
+  json-translator:
+    apiEndpoints:
+      - json-translator
+    policies:
+      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: json-translator-api 
+              xfwd: true
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+              
+  # Clipboard
+  clipboard:
+    apiEndpoints:
+      - clipboard
+    policies:
+      - keycloak-protect:
+      - proxy:
+          - action:
+              serviceEndpoint: clipboard-api 
+              xfwd: true
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+
+  # File transfer service
+  file-server:
+    apiEndpoints:
+      - file-server
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: file-server-api 
+              xfwd: true
+              changeOrigin: true
+              prependPath:  true
+              ignorePath:   false
+              stripPath:    true
+
+  # Security
+  # webapp-login:
+    # apiEndpoints:
+      # - webapp-login
+    # policies:
+      # - proxy:
+          # - action:
+              # serviceEndpoint: webapp-login
+              # xfwd: true

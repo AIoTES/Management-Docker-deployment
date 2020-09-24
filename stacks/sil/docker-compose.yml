@@ -1,0 +1,121 @@
+version: '3.3'
+services:
+  intermw:
+    hostname: intermw
+    image: "docker-activage.satrd.es/intermw:${INTERMW_VERSION}"
+    expose:
+      - "8080"
+    volumes:
+      - "intermw_config:/etc/inter-iot/intermw"
+      - "intermw_bin:/usr/local/tomcat/webapps"
+    depends_on:
+      - rabbitmq
+      - parliament
+      - ipsm
+    restart: unless-stopped
+
+  config-mngt:
+    image: "docker-activage.satrd.es/intermw-mngt:0.0.3"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    environment:
+      INTERMW_CALLBACK_PROTOCOL: "${INTERMW_CALLBACK_PROTOCOL}"
+      INTERMW_CALLBACK_IP: "${AIOTES_HOSTNAME}"
+      INTERMW_CALLBACK_PORT: "${AIOTES_API_PORT}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - intermw
+
+  rabbitmq:
+    hostname: rabbitmq
+    image: "rabbitmq:3.7-management-alpine"
+    expose:
+      - "15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "${RABBITMQ_USER}"
+      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_PASS}"
+    volumes:
+      - "rabbitmq_data:/var/lib/rabbitmq"
+    restart: unless-stopped
+
+  parliament:
+    hostname: parliament
+    image: "daxid/parliament-triplestore"
+    expose:
+      - "8089"
+    volumes:
+      - "parliament_data:/usr/local/ParliamentKB/data"
+    restart: unless-stopped
+
+  zookeeper:
+    hostname: zookeeper
+    image: 'wurstmeister/zookeeper:latest'
+    restart: unless-stopped
+    expose:
+      - "2181"
+    volumes:
+      - "zookeeper_conf:/opt/zookeeper-3.4.9/conf"
+      - "zookeeper_data:/opt/zookeeper-3.4.9/data"
+
+  kafka:
+    hostname: kafka
+    image: wurstmeister/kafka:1.0.0
+    restart: unless-stopped
+    expose:
+      - "9092"
+    links:
+      - zookeeper
+    depends_on:
+      - zookeeper
+    env_file:
+      - environment/kafka_config.env # should be fine as is
+      - environment/kafka_vars.env   # might need modification
+    volumes:
+      - kafka-certs:/certs
+      - kafka-scripts:/scripts
+      - kafka-data:/kafka
+
+  ipsm:
+    hostname: ipsm
+    image: docker-activage.satrd.es/ipsm-core:${IPSM_VERSION}
+    restart: unless-stopped
+    expose:
+      - "8080"
+    links:
+      - kafka
+      - zookeeper
+    depends_on:
+      - kafka
+      - zookeeper
+    env_file:
+      - environment/ipsm_config.env    # should be fine as is
+      - environment/ipsm_vars.env      # might need modification
+    volumes:
+      - ipsm-certs:/certs
+      - ipsm-data:/sqlite
+
+volumes:
+  intermw_config:
+  intermw_bin:
+  parliament_data:
+  rabbitmq_data:
+  zookeeper_conf:
+  zookeeper_data:
+  kafka-data:
+    external: true
+  kafka-certs:
+    external: true
+  kafka-scripts:
+    external: true
+  ipsm-data:
+    external: true
+  ipsm-certs:
+    external: true
+
+networks:
+  default:
+    external:
+      name: aiotes

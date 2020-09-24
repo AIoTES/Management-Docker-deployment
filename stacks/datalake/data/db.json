@@ -1,0 +1,56 @@
+{
+  "platforms": [
+	{
+		"id": "http://inter-iot.eu/platforms/test-platform",
+		"platformType": "http://inter-iot.eu/UniversAAL",
+		"baseEndpoint": "",
+		"location": "",
+		"name": "Test Platform",
+		"downstreamInputAlignmentName": "",
+		"downstreamInputAlignmentVersion": "",
+		"downstreamOutputAlignmentName": "",
+		"downstreamOutputAlignmentVersion": "",
+		"upstreamInputAlignmentName": "",
+		"upstreamInputAlignmentVersion": "",
+		"upstreamOutputAlignmentName": "",
+		"upstreamOutputAlignmentVersion": ""
+	}
+  ],
+  "services": [
+    {
+      "id": "ipsm",
+      "type": "semantic-translator",
+      "url": "http://ipsm:8080/"
+    },
+	{
+      "id": "uaal-translator",
+      "type": "syntactic-translator",
+      "url": "http://syntactic-translator:4568/universaal",
+	  "platformType": "http://inter-iot.eu/UniversAAL"
+    },
+	{
+      "id": "fiware-translator",
+      "type": "syntactic-translator",
+      "url": "http://syntactic-translator:4568/fiware",
+      "platformType": "http://inter-iot.eu/FIWARE"
+    },
+	{
+      "id": "sofia-translator",
+      "type": "syntactic-translator",
+      "url": "http://syntactic-translator:4568/sofia",
+	  "platformType": "http://inter-iot.eu/sofia2"
+    },
+    {
+      "id": "ids",
+      "type": "independent-storage",
+      "url": "http://ids:4567/",
+      "sources": [
+        "http://inter-iot.eu/platforms/test-platform"
+      ],
+      "user": "",
+      "password": "",
+      "DS": "Madrid",
+      "platform": "universAAL"
+    }
+  ]
+}

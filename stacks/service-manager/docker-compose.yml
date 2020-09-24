@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+    service-manager:
+        image: docker-activage.satrd.es/service-manager:1.0.2
+        restart: unless-stopped
+        expose:
+            - "9082"
+        environment:
+            - "BACKEND_URL=${BACKEND_URL}"
+            - "AIOTES_HOSTNAME=${AIOTES_HOSTNAME}"
+            - "AIOTES_API_PORT=${AIOTES_API_PORT}"
+            - "KEYCLOAK_CLIENT_NAME=${KEYCLOAK_CLIENT_NAME}"
+            - "KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}"
+            - "KEYCLOAK_REDIRECT_URI=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/web/activage/service-manager/redirect"
+        command:
+            - "/usr/bin/service_manager/start.sh"
+
+networks:
+  default:
+    external:
+      name: aiotes

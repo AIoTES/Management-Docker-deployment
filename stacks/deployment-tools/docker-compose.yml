@@ -1,0 +1,73 @@
+version: '3.7'
+services:
+  deployment-tools-frontend:
+    image: docker-activage.satrd.es/deployment-tools-frontend:1.0
+    environment:
+      - SECURITY_ENABLED=true
+      - SECURITY_REALM=${SECURITY_REALM}
+      - SECURITY_KEYCLOAK_URL=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}${API_PATH}/auth
+      - SECURITY_CLIENT_ID=${SECURITY_CLIENT_ID}
+  
+  deployment-manager:
+    image: docker-activage.satrd.es/deployment-manager:1.0
+    environment:
+      - METADATA_STORAGE_SERVER_URL=${METADATA_STORAGE_SERVER_URL}
+    restart: unless-stopped
+
+  component-configurator:
+    image: docker-activage.satrd.es/component-configuration:2.2
+    environment:
+      - CLIENT_ID=${CLIENT_ID}
+      - SIL_URL=${SIL_URL}
+      - DOCKER=True
+      - CALLBACK_URL=${CALLBACK_URL}
+      - RECEIVING_CAPACITY=${RECEIVING_CAPACITY}
+      - RESPONSE_FORMAT=${RESPONSE_FORMAT}
+      - RESPONSE_DELIVERY=${RESPONSE_DELIVERY}
+      - BASE_PATH=${BASE_PATH}
+    restart: unless-stopped
+
+  maintenance-panel:
+    image: docker-activage.satrd.es/maintenance-panel:1.0
+    environment:
+      - POSTGRES_HOST=maintenance-panel-database
+      - POSTGRES_PORT=5432
+      - POSTGRES_DATABASE=activage-maintenance-panel
+      - POSTGRES_USER=activage
+      - POSTGRES_PASSWORD=activage
+    restart: unless-stopped
+  
+  maintenance-panel-database:
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_USER=activage
+      - POSTGRES_PASSWORD=activage
+      - POSTGRES_DB=activage-maintenance-panel
+    restart: unless-stopped
+
+  update-manager:
+    image: docker-activage.satrd.es/update-manager:1.0
+    environment:
+      - DOCKER_REGISTRY_SERVER_URL=https://docker-activage.satrd.es
+      - DOCKER_REGISTRY_USER=activage
+      - DOCKER_REGISTRY_PASSWORD=docker.activage
+      - STORAGE=POSTGRES
+      - POSTGRES_HOST=update-manager-database
+      - POSTGRES_PORT=5432
+      - POSTGRES_DATABASE=activage-update-manager
+      - POSTGRES_USER=activage
+      - POSTGRES_PASSWORD=activage
+    restart: unless-stopped
+  
+  update-manager-database:
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_USER=activage
+      - POSTGRES_PASSWORD=activage
+      - POSTGRES_DB=activage-update-manager
+    restart: unless-stopped
+
+networks:
+  default:
+    external:
+      name: aiotes

@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  
+  visual-analytics:
+    image: docker-activage.satrd.es/visualanalytics:1.10
+    restart: unless-stopped
+    environment:
+        - "LOGIN_PATH=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/services/fileserver/api/activage/login"
+        - "DATA_ANALYTICS_API_URL=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/analytics/"
+        - "SEMANTIC_TRANSLATION_API_URL=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/services/jsontranslator/"
+        - "DATA_LAKE_API_URL=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/datalake/dataIntegrationEngine/"
+        - "TRANFSER_FILES=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/services/fileserver/api/activage"
+        - "FONTS_URL=/assets/fonts"
+    command:
+        - "/bin/bash"
+        - "/usr/share/nginx/html/start.sh"
+
+networks:
+  default:
+    external:
+      name: aiotes

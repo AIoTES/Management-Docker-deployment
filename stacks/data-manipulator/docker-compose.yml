@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  
+  data-manipulator:
+    image: docker-activage.satrd.es/datamanipulator:1.6
+    restart: unless-stopped
+    environment:
+      - "TRANSFER_FILES_URL=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/services/fileserver/api/activage"
+      - "TRANSFER_FILES_BASE_URL=${BASE_URL_PROTOCOL}://${AIOTES_HOSTNAME}:${AIOTES_API_PORT}/services/fileserver/api/activage"
+    command:
+        - "/bin/bash"
+        - "/usr/share/nginx/html/start.sh"
+
+networks:
+  default:
+    external:
+      name: aiotes

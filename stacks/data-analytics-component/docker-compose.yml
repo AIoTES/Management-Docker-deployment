@@ -1,0 +1,75 @@
+version: "3"
+services:
+  data-analytics-proxy:
+    image: docker-activage.satrd.es/data-analytics-proxy:0.1
+    expose:
+      - "8070"
+    restart: unless-stopped
+  data-analysis-api:
+    image: docker-activage.satrd.es/data-analytics-server:0.2.1
+    expose:
+      - "8081"
+    restart: unless-stopped
+  hierarchical-clustering:
+    image: docker-activage.satrd.es/hierarchical-clustering-method:1.0
+    expose:
+      - "8000"
+    restart: unless-stopped
+  filter-method:
+    image: docker-activage.satrd.es/feature-selection-filter-method:1.0
+    expose:
+      - "8000"
+    restart: unless-stopped
+  wrapper-method:
+    image: docker-activage.satrd.es/feature-selection-wrapper-method:1.0
+    environment:
+      - ANALYTICS_SERVER=http://data-analysis-api:8081
+    expose:
+      - "8000"
+    restart: unless-stopped
+  pca:
+    image: docker-activage.satrd.es/dva-data_analyser-pca:1.0
+    environment:
+      - API_PORT=8083
+      - API_PROTOCOL=http
+    expose:
+      - "8083"
+    restart: unless-stopped
+  htm:
+    # image: docker-activage.satrd.es/clickdigital-anomaly:1.0
+    image: docker-activage.satrd.es/clickdigital-anomaly:latest
+    # container_name: clickdigital-anomaly
+    expose:
+      - "8080"
+    restart: unless-stopped
+  hypothesis-testing:
+    image: docker-activage.satrd.es/hypothesis-testing:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod,swagger
+      - SPRING_DATA_MONGODB_URI=mongodb://simlife-mongodb:27017
+      - SPRING_DATA_MONGODB_DATABASE=simlife
+      - SIMLIFE_SLEEP=10 # gives time for the database to boot before the application
+    expose:
+      - "8080"
+    restart: unless-stopped
+  simlife-mongodb:
+    image: mongo:3.4.10
+    expose:
+      - "27017"
+    restart: unless-stopped
+# Ad-hoc services
+  translator:
+    image: docker-activage.satrd.es/activage_translator:3.0
+    restart: unless-stopped
+    expose:
+      - "8080"
+  # clipboard:
+    # image: docker-activage.satrd.es/activage-transfer-server:0.1
+    # restart: unless-stopped
+    # expose:
+      # - "3000" 
+
+networks:
+  default:
+    external:
+      name: aiotes

@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  portainer:
+    image: portainer/portainer
+    ports:
+      - "9000:9000"
+    restart: always
+    command: --admin-password '$$2y$$05$$9wDgb6tKjwB6wnYtXZ43TOzYF/ftrhkkR.S6JMZNRhKRxgylE9LWy' -H unix:///var/run/docker.sock --logo https://i.imgur.com/lknx2nd.png --templates http://portainer-templates/templates.json   
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    environment:
+      - AIOTES_HOSTNAME=localhost
+      - AIOTES_API_PORT=8081
+      - AIOTES_SYSADMIN_EMAIL=myname@mydomain.com
+
+  portainer-templates:
+    image: docker-activage.satrd.es/aiotes-portainer-templates:2.0
+    restart: always
+    
+  portainer-mngt:
+    image: docker-activage.satrd.es/portainer-mngt:0.1
+    depends_on:
+      - portainer
+    restart: on-failure
+
+volumes:
+  portainer_data:
