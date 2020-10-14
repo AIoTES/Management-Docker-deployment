@@ -16,7 +16,7 @@ services:
       - AIOTES_SYSADMIN_EMAIL=myname@mydomain.com
 
   portainer-templates:
-    image: docker-activage.satrd.es/aiotes-portainer-templates:2.0
+    image: aiotesdocker/management-docker-portainer_templates
     restart: always
 
 volumes:

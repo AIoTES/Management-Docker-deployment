@@ -23,13 +23,13 @@ To customize your App templates, edit the templates.json file and then build a D
 To build a Nginx container to serve the AIoTES templates, use:
 
 
-`docker build -t docker-activage.satrd.es/aiotes-portainer-templates:2.0 .`
+`docker build -t management-docker-portainer_templates .`
 
 
 To check that everything is OK, you can run the image using:
 
 
-`docker run -d -p "8080:80" portainer-templates`
+`docker run -d -p "8080:80" management-docker-portainer_templates`
 
 
 The templates definitions will be available at http://docker-host:8080/templates.json

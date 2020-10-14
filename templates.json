@@ -110,8 +110,7 @@
 	"categories": ["interoperability", "deployment"],
     "name": "sil-mngt",
 	"platform": "linux",
-    "registry": "docker-activage.satrd.es",
-    "image": "sil-mngt:0.0.1",
+    "image": "aiotesdocker/sil-support-sil_mngt",
     "volumes": [
       {
         "container": "/var/run/docker.sock",
