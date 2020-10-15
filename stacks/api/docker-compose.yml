@@ -3,7 +3,7 @@ version: '3.3'
 services:
 
   express-gw:
-    image: docker-activage.satrd.es/express-gateway-with-keycloak-plugin:v1.16.7-debug
+    image: aiotesdocker/management-api_gw-expressgateway:v1.16.7-debug
     ports:
       - "${AIOTES_API_PORT}:${AIOTES_API_PORT}"
     environment:
@@ -29,7 +29,7 @@ services:
             - ${AIOTES_HOSTNAME}
 
   swagger-ui:
-    image: docker-activage.satrd.es/aiotes-swagger:2.0
+    image: aiotesdocker/management-api_gw-swagger
     restart: unless-stopped
     networks:
       - aiotes
@@ -46,7 +46,7 @@ services:
       - aiotes
 
   certbot:
-    image: docker-activage.satrd.es/certbot:latest
+    image: aiotesdocker/management-api_gw-certbot
     expose:
       - 80
     ports:
