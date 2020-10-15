@@ -2,7 +2,7 @@ version: '3.3'
 services:
 # Query mechanism
     query:
-        image: docker-activage.satrd.es/dl-query-component:0.0.4
+        image: aiotesdocker/datalayer-datalake-queryexecution
         expose:
         - "4570"
         links:
@@ -10,7 +10,7 @@ services:
         command: http://json-server/
         restart: unless-stopped
     json-server:
-        image: docker-activage.satrd.es/json-server
+        image: clue/json-server
         expose:
         - "80"
         configs:
@@ -19,7 +19,7 @@ services:
         restart: unless-stopped
     
     syntactic-translator:
-        image: docker-activage.satrd.es/syntactic-translator:0.0.2
+        image: aiotesdocker/sil-support-mwtranslator
         expose:
         - "4568"
         restart: unless-stopped
@@ -33,7 +33,7 @@ services:
         - "influxdb_data:/var/lib/influxdb"
         restart: unless-stopped
     ids:
-        image: docker-activage.satrd.es/independentdatastorage:0.8
+        image: aiotesdocker/datalayer-datalake-ids
         expose:
         - "4567"
         environment:

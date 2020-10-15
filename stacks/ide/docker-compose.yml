@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
   
   nodered:
-    image: docker-activage.satrd.es/activage-nr-service-composition:0.0.3
+    image: aiotesdocker/devtools-ide-servicecomposer
     expose:
       - "1880"
     restart: unless-stopped

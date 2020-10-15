@@ -2,7 +2,7 @@ version: '3.3'
 services:
   intermw:
     hostname: intermw
-    image: "docker-activage.satrd.es/intermw:${INTERMW_VERSION}"
+    image: "aiotesdocker/sil-intermw:2.3.1"
     expose:
       - "8080"
     volumes:
@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
 
   config-mngt:
-    image: "docker-activage.satrd.es/intermw-mngt:0.0.3"
+    image: "aiotesdocker/sil-support-intermw_mngt"
     deploy:
       replicas: 1
       restart_policy:
@@ -80,7 +80,7 @@ services:
 
   ipsm:
     hostname: ipsm
-    image: docker-activage.satrd.es/ipsm-core:${IPSM_VERSION}
+    image: aiotesdocker/sil-ipsm:0.8.8
     restart: unless-stopped
     expose:
       - "8080"

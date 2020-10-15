@@ -2,7 +2,7 @@ version: '3.3'
 services:
   
   nodered:
-    image: docker-activage.satrd.es/activage-nr-service-composition:0.0.3
+    image: aiotesdocker/devtools-ide-servicecomposer
     restart: unless-stopped
 
 
